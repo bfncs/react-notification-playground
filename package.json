@@ -1,0 +1,31 @@
+{
+  "name": "saga-playground",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "chance": "^1.0.13",
+    "react": "^16.3.1",
+    "react-dom": "^16.3.1",
+    "react-redux": "^5.0.7",
+    "react-scripts-ts": "2.8.0",
+    "react-spring": "^4.2.0",
+    "redux": "^4.0.0",
+    "redux-saga": "^0.16.0",
+    "uuid": "^3.2.1"
+  },
+  "devDependencies": {
+    "@types/chance": "^1.0.0",
+    "@types/react": "^16.3.1",
+    "@types/react-dom": "^16.0.5",
+    "@types/react-redux": "^5.0.16",
+    "@types/redux": "^3.6.0",
+    "@types/redux-saga": "^0.10.5",
+    "@types/uuid": "^3.4.3"
+  },
+  "scripts": {
+    "start": "react-scripts-ts start",
+    "build": "react-scripts-ts build",
+    "test": "react-scripts-ts test --env=jsdom",
+    "eject": "react-scripts-ts eject"
+  }
+}

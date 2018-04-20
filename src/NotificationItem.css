@@ -1,0 +1,15 @@
+.notificationItem {
+    display: flex;
+    margin: 2em;
+    padding: .4em;
+    background: seashell;
+}
+
+.notificationItem-content {
+    flex: 1;
+}
+
+.notificationItem-close {
+    padding: 0 0 0 2em;
+    cursor: pointer;
+}
