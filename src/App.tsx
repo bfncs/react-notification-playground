@@ -2,6 +2,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import "./App.css";
 import Controls from "./Controls";
+import { Entries } from "./Entries";
 import { INotification } from "./model";
 import Notifications from "./Notifications";
 import { IAppState } from "./redux";
@@ -43,6 +44,7 @@ class App extends React.Component<IProps> {
             removeNotification={removeNotification}
             clearNotifications={clearNotifications}
           />
+          <Entries />
         </div>
       </div>
     );

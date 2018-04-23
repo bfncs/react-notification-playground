@@ -2,7 +2,8 @@
   display: flex;
   margin: 2em;
   padding: 0.4em;
-  background: seashell;
+  background: lightsalmon;
+  border-radius: 3px;
 }
 
 .notificationItem-content {
