@@ -1,9 +1,10 @@
 import * as React from 'react';
-import './Notifications.css';
 import {INotification} from "./model";
 import NotificationItem from "./NotificationItem";
+import './Notifications.css';
 
-const {Transition} = require('react-spring');
+// tslint:disable-next-line no-var-requires
+const { Transition } = require("react-spring");
 
 interface IProps {
     notifications: INotification[];
@@ -11,7 +12,7 @@ interface IProps {
 }
 
 class Notifications extends React.Component<IProps> {
-    render(): JSX.Element {
+    public render(): JSX.Element {
         const { notifications, removeNotification } = this.props;
         return (
             <div className="notifications-container">

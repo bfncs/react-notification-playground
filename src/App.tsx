@@ -1,8 +1,8 @@
 import * as React from 'react';
 import './App.css';
-import Notifications from "./Notifications";
 import Controls from "./Controls";
 import {INotification} from "./model";
+import Notifications from "./Notifications";
 
 interface IState {
     notifications: INotification[],
@@ -16,19 +16,19 @@ class App extends React.Component<any, IState> {
         this.state = INITIAL_STATE;
     }
 
-    addNotification = (notification: INotification) => {
+    public addNotification = (notification: INotification) => {
         this.setState(state => ({notifications: [...state.notifications, notification]}))
     };
 
-    removeNotification = (notificationId: string) => {
+    public removeNotification = (notificationId: string) => {
         this.setState(state => ({notifications: state.notifications.filter(n => n.id !== notificationId)}))
     };
 
-    clearNotifications = () => {
+    public clearNotifications = () => {
         this.setState(state => ({ notifications: [] }))
     };
 
-    render(): JSX.Element {
+    public render(): JSX.Element {
         const { notifications } = this.state;
         return (
             <div className="app-container">

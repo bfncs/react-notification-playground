@@ -7,7 +7,7 @@ export interface INotification {
 }
 
 export const NotificationFromMessage = (message: string, closable = true) => ({
+    closable,
     id: uuid(),
-    message,
-    closable
+    message
 });

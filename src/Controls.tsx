@@ -1,5 +1,5 @@
-import * as React from 'react';
 import {Chance} from 'chance';
+import * as React from 'react';
 import './Controls.css';
 import {INotification, NotificationFromMessage} from "./model/Notification";
 
@@ -12,11 +12,11 @@ interface IProps {
 }
 
 class Controls extends React.Component<IProps> {
-    addClosableNotification = () => {
+    public addClosableNotification = () => {
         this.props.addNotification(NotificationFromMessage(chance.sentence()));
     };
 
-    addTimedNotification = () => {
+    public addTimedNotification = () => {
         const notification = NotificationFromMessage(chance.sentence(), false);
         this.props.addNotification(notification);
         setTimeout(
@@ -25,12 +25,12 @@ class Controls extends React.Component<IProps> {
         );
     };
 
-    render(): JSX.Element {
-        const {addClosableNotification, addTimedNotification, props: {clearNotifications}} = this;
+    public render(): JSX.Element {
+        const { clearNotifications } = this.props;
         return (
             <div className="controls-container">
-              <button className="controls-button" onClick={addClosableNotification}>Add closable notification</button>
-              <button className="controls-button" onClick={addTimedNotification}>Add timed notification</button>
+              <button className="controls-button" onClick={this.addClosableNotification}>Add closable notification</button>
+              <button className="controls-button" onClick={this.addTimedNotification}>Add timed notification</button>
               <button className="controls-button" onClick={clearNotifications}>Clear notifications</button>
             </div>
         );

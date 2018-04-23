@@ -1,6 +1,6 @@
 import * as React from 'react';
-import './NotificationItem.css';
 import {INotification} from "./model";
+import './NotificationItem.css';
 
 
 interface IProps {
@@ -9,11 +9,11 @@ interface IProps {
 }
 
 class NotificationItem extends React.Component<IProps> {
-    createNotificationRemover = (notificationId: string) => () => {
+    public createNotificationRemover = (notificationId: string) => () => {
         this.props.removeNotification(notificationId);
     };
 
-    render(): JSX.Element {
+    public render(): JSX.Element {
         const { notification } = this.props;
         return (
             <div className="notificationItem">
