@@ -1,13 +1,13 @@
 import { v4 as uuid } from "uuid";
 
 export interface INotification {
-    id: string,
-    message: string,
-    closable: boolean,
+  id: string;
+  message: string;
+  closable: boolean;
 }
 
 export const NotificationFromMessage = (message: string, closable = true) => ({
-    closable,
-    id: uuid(),
-    message
+  closable,
+  id: uuid(),
+  message
 });

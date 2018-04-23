@@ -4,10 +4,14 @@ body {
   font-family: sans-serif;
 }
 
-body, html, #root {
+body,
+html,
+#root {
   height: 100%;
 }
 
-*, *:before, *:after {
+*,
+*:before,
+*:after {
   box-sizing: border-box;
 }
