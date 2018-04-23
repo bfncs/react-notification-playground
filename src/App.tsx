@@ -1,52 +1,47 @@
 import * as React from "react";
+import { connect } from "react-redux";
 import "./App.css";
 import Controls from "./Controls";
 import { INotification } from "./model";
 import Notifications from "./Notifications";
+import { IAppState } from "./redux";
+import {
+  createAddNotificationAction,
+  createClearNotificationsAction,
+  createRemoveNotificationAction,
+  INotificationsAddAction,
+  INotificationsClearAction,
+  INotificationsRemoveAction
+} from "./redux/notifications";
 
-interface IState {
+interface IProps {
   notifications: INotification[];
+  addNotification: (notification: INotification) => INotificationsAddAction;
+  removeNotification: (notificationId: string) => INotificationsRemoveAction;
+  clearNotifications: () => INotificationsClearAction;
 }
 
-const INITIAL_STATE: IState = { notifications: [] };
-
-class App extends React.Component<any, IState> {
-  constructor(props: any) {
-    super(props);
-    this.state = INITIAL_STATE;
-  }
-
-  public addNotification = (notification: INotification) => {
-    this.setState(state => ({
-      notifications: [...state.notifications, notification]
-    }));
-  };
-
-  public removeNotification = (notificationId: string) => {
-    this.setState(state => ({
-      notifications: state.notifications.filter(n => n.id !== notificationId)
-    }));
-  };
-
-  public clearNotifications = () => {
-    this.setState(state => ({ notifications: [] }));
-  };
-
+class App extends React.Component<IProps> {
   public render(): JSX.Element {
-    const { notifications } = this.state;
+    const {
+      notifications,
+      addNotification,
+      removeNotification,
+      clearNotifications
+    } = this.props;
     return (
       <div className="app-container">
         <div className="app-notifications">
           <Notifications
             notifications={notifications}
-            removeNotification={this.removeNotification}
+            removeNotification={removeNotification}
           />
         </div>
         <div className="app-content">
           <Controls
-            addNotification={this.addNotification}
-            removeNotification={this.removeNotification}
-            clearNotifications={this.clearNotifications}
+            addNotification={addNotification}
+            removeNotification={removeNotification}
+            clearNotifications={clearNotifications}
           />
         </div>
       </div>
@@ -54,4 +49,14 @@ class App extends React.Component<any, IState> {
   }
 }
 
-export default App;
+const mapStateToProps = ({ notifications }: IAppState) => ({
+  notifications
+});
+
+const mapDispatchToProps = {
+  addNotification: createAddNotificationAction,
+  clearNotifications: createClearNotificationsAction,
+  removeNotification: createRemoveNotificationAction
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
