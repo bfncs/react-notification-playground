@@ -9,6 +9,7 @@
 .app-notifications,
 .app-content {
   position: relative;
+  flex-shrink: 0;
 }
 
 .app-notifications {

@@ -1,20 +1,11 @@
 import * as React from "react";
-import { connect } from "react-redux";
-import { entries as entriesApi } from "./api";
-import { IEntry, INotification } from "./model";
-import { NotificationFromMessage } from "./model/Notification";
-import { createEntriesAddAction, IEntriesAddAction } from "./redux/entries";
-import {
-  createAddNotificationAction,
-  createRemoveNotificationAction,
-  INotificationsAddAction,
-  INotificationsRemoveAction
-} from "./redux/notifications";
+import { connect, Dispatch } from "react-redux";
+import { IEntry } from "./model";
+import { addEntrySaga } from "./sagas";
+import { notifySaga } from "./sagas/notify";
 
 interface IProps {
-  addEntry: (entry: IEntry) => IEntriesAddAction;
-  addNotification: (notification: INotification) => INotificationsAddAction;
-  removeNotification: (notificationId: string) => INotificationsRemoveAction;
+  addEntry: (entryName: string) => Promise<IEntry>;
 }
 
 class EntriesFormImpl extends React.PureComponent<IProps> {
@@ -22,41 +13,27 @@ class EntriesFormImpl extends React.PureComponent<IProps> {
     return <input type="text" onKeyPress={this.handleInputKeyPress} />;
   }
 
-  private notify = (msg: string) => {
-    const notification = NotificationFromMessage(msg, false);
-    this.props.addNotification(notification);
-    setTimeout(() => {
-      this.props.removeNotification(notification.id);
-    }, 3000);
-  };
-
   private handleInputKeyPress = (
     e: React.KeyboardEvent<HTMLInputElement>
   ): void => {
-    const { addEntry } = this.props;
     const { currentTarget } = e;
+    const { addEntry } = this.props;
     if (currentTarget.value && e.key === "Enter") {
       currentTarget.disabled = true;
-      entriesApi
-        .add(currentTarget.value)
-        .then((entry: IEntry) => {
+      addEntry(currentTarget.value)
+        .then(() => {
           currentTarget.disabled = false;
           currentTarget.value = "";
-          addEntry(entry);
-          this.notify("Successfully added entry.");
         })
         .catch(() => {
           currentTarget.disabled = false;
-          this.notify("Unable to add entry.");
         });
     }
   };
 }
 
-const mapDispatchToProps = {
-  addEntry: createEntriesAddAction,
-  addNotification: createAddNotificationAction,
-  removeNotification: createRemoveNotificationAction
-};
+const mapDispatchToProps = (dispatch: Dispatch<void>) => ({
+  addEntry: addEntrySaga(dispatch, notifySaga(dispatch))
+});
 
 export const EntriesForm = connect(null, mapDispatchToProps)(EntriesFormImpl);
