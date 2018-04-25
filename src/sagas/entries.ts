@@ -11,7 +11,7 @@ export const addEntrySaga = (
     .add(entryName)
     .then((entry: IEntry) => {
       dispatch(createEntriesAddAction(entry));
-      notify("Successfully added entry.", false, 5000);
+      notify(`Successfully added entry: „${entry.name}“`, false, 5000);
       return entry;
     })
     .catch(() => {

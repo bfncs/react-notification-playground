@@ -20,7 +20,13 @@ interface IProps {
 
 const EntriesList = (entries: IEntry[]): JSX.Element =>
   entries ? (
-    <ul>{entries.map(f => <li key={f.id}>{f.name}</li>)}</ul>
+    <ul>
+      {entries.map(entry => (
+        <li key={entry.id} title={entry.id}>
+          {entry.name}
+        </li>
+      ))}
+    </ul>
   ) : (
     <div>Add your first entry now!</div>
   );
@@ -38,8 +44,8 @@ class EntriesImpl extends React.PureComponent<IProps> {
     return (
       <div>
         <h2>Entries:</h2>
-        {fetching ? LoadingView() : EntriesList(entries)}
         <EntriesForm />
+        {fetching ? LoadingView() : EntriesList(entries)}
       </div>
     );
   }

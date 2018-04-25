@@ -10,7 +10,13 @@ interface IProps {
 
 class EntriesFormImpl extends React.PureComponent<IProps> {
   public render(): JSX.Element {
-    return <input type="text" onKeyPress={this.handleInputKeyPress} />;
+    return (
+      <input
+        type="text"
+        placeholder="Add entry…"
+        onKeyPress={this.handleInputKeyPress}
+      />
+    );
   }
 
   private handleInputKeyPress = (
