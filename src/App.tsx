@@ -1,35 +1,24 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import "./App.css";
-import Controls from "./Controls";
+import NotificationControls from "./Controls";
 import { Entries } from "./Entries";
 import { INotification } from "./model";
 import Notifications from "./Notifications";
 import { IAppState } from "./redux";
 import {
-  createAddNotificationAction,
-  createClearNotificationsAction,
   createRemoveNotificationAction,
-  INotificationsAddAction,
-  INotificationsClearAction,
   INotificationsRemoveAction
 } from "./redux/notifications";
 
 interface IProps {
   notifications: INotification[];
-  addNotification: (notification: INotification) => INotificationsAddAction;
   removeNotification: (notificationId: string) => INotificationsRemoveAction;
-  clearNotifications: () => INotificationsClearAction;
 }
 
 class App extends React.Component<IProps> {
   public render(): JSX.Element {
-    const {
-      notifications,
-      addNotification,
-      removeNotification,
-      clearNotifications
-    } = this.props;
+    const { notifications, removeNotification } = this.props;
     return (
       <div className="app-container">
         <div className="app-notifications">
@@ -39,11 +28,7 @@ class App extends React.Component<IProps> {
           />
         </div>
         <div className="app-content">
-          <Controls
-            addNotification={addNotification}
-            removeNotification={removeNotification}
-            clearNotifications={clearNotifications}
-          />
+          <NotificationControls />
           <Entries />
         </div>
       </div>
@@ -56,8 +41,6 @@ const mapStateToProps = ({ notifications }: IAppState) => ({
 });
 
 const mapDispatchToProps = {
-  addNotification: createAddNotificationAction,
-  clearNotifications: createClearNotificationsAction,
   removeNotification: createRemoveNotificationAction
 };
 

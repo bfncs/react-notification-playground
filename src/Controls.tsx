@@ -1,27 +1,24 @@
 import { Chance } from "chance";
 import * as React from "react";
+import { connect, Dispatch } from "react-redux";
 import "./Controls.css";
-import { INotification, NotificationFromMessage } from "./model/Notification";
+import { createClearNotificationsAction } from "./redux/notifications";
+import { notifySaga } from "./sagas/notifications";
 
 const chance = Chance.Chance();
 
 interface IProps {
-  addNotification: (notification: INotification) => void;
-  removeNotification: (notificationId: string) => void;
   clearNotifications: () => void;
+  notify: (msg: string, closable?: boolean, timeout?: number) => void;
 }
 
 class Controls extends React.Component<IProps> {
   public addClosableNotification = () => {
-    this.props.addNotification(NotificationFromMessage(chance.sentence()));
+    this.props.notify(chance.sentence(), true);
   };
 
   public addTimedNotification = () => {
-    const notification = NotificationFromMessage(chance.sentence(), false);
-    this.props.addNotification(notification);
-    setTimeout(() => {
-      this.props.removeNotification(notification.id);
-    }, 7000);
+    this.props.notify(chance.sentence(), false, 7000);
   };
 
   public render(): JSX.Element {
@@ -45,4 +42,11 @@ class Controls extends React.Component<IProps> {
   }
 }
 
-export default Controls;
+const mapDispatchToProps = (dispatch: Dispatch<void>): IProps => ({
+  clearNotifications: () => {
+    dispatch(createClearNotificationsAction());
+  },
+  notify: notifySaga(dispatch)
+});
+
+export default connect(null, mapDispatchToProps)(Controls);

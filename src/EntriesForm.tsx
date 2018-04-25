@@ -2,7 +2,7 @@ import * as React from "react";
 import { connect, Dispatch } from "react-redux";
 import { IEntry } from "./model";
 import { addEntrySaga } from "./sagas";
-import { notifySaga } from "./sagas/notify";
+import { notifySaga } from "./sagas/notifications";
 
 interface IProps {
   addEntry: (entryName: string) => Promise<IEntry>;

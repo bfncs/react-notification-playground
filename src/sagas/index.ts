@@ -1,2 +1,2 @@
-export * from "./addEntry";
-export * from "./notify";
+export * from "./entries";
+export * from "./notifications";
