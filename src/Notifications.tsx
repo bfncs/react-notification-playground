@@ -1,7 +1,10 @@
 import * as React from "react";
+import { connect, Dispatch } from "react-redux";
 import { INotification } from "./model";
 import NotificationItem from "./NotificationItem";
 import "./Notifications.css";
+import { IAppState } from "./redux/index";
+import { createRemoveNotificationAction } from "./redux/notifications";
 
 // tslint:disable-next-line no-var-requires
 const { Transition } = require("react-spring");
@@ -11,7 +14,7 @@ interface IProps {
   removeNotification: (notificationId: string) => void;
 }
 
-class Notifications extends React.Component<IProps> {
+class Notifications extends React.PureComponent<IProps> {
   public render(): JSX.Element {
     const { notifications, removeNotification } = this.props;
     return (
@@ -36,4 +39,14 @@ class Notifications extends React.Component<IProps> {
   }
 }
 
-export default Notifications;
+const mapStateToProps = ({ notifications }: IAppState) => ({
+  notifications
+});
+
+const mapDispatchToProps = (dispatch: Dispatch<void>) => ({
+  removeNotification: (notificationId: string) => {
+    dispatch(createRemoveNotificationAction(notificationId));
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Notifications);
