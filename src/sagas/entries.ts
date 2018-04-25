@@ -6,18 +6,15 @@ import { createEntriesAddAction } from "../redux/entries";
 export const addEntrySaga = (
   dispatch: Dispatch<void>,
   notify: (msg: string, closable: boolean, timeout?: number) => void
-) => (entryName: string): Promise<IEntry> => {
-  return new Promise((resolve, reject) => {
-    entries
-      .add(entryName)
-      .then((entry: IEntry) => {
-        dispatch(createEntriesAddAction(entry));
-        notify("Successfully added entry.", false, 5000);
-        resolve(entry);
-      })
-      .catch(() => {
-        notify("Unable to add entry.", false);
-        reject();
-      });
-  });
-};
+) => (entryName: string): Promise<IEntry> =>
+  entries
+    .add(entryName)
+    .then((entry: IEntry) => {
+      dispatch(createEntriesAddAction(entry));
+      notify("Successfully added entry.", false, 5000);
+      return entry;
+    })
+    .catch(() => {
+      notify("Unable to add entry.", false);
+      throw new Error();
+    });
