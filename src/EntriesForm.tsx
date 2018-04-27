@@ -2,7 +2,6 @@ import * as React from "react";
 import { connect, Dispatch } from "react-redux";
 import { IEntry } from "./model";
 import { addEntrySaga } from "./sagas";
-import { notifySaga } from "./sagas/notifications";
 
 interface IProps {
   addEntry: (entryName: string) => Promise<IEntry>;
@@ -39,7 +38,7 @@ class EntriesFormImpl extends React.PureComponent<IProps> {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<void>) => ({
-  addEntry: addEntrySaga(dispatch, notifySaga(dispatch))
+  addEntry: addEntrySaga(dispatch)
 });
 
 export const EntriesForm = connect(null, mapDispatchToProps)(EntriesFormImpl);
