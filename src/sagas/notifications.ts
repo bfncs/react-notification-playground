@@ -15,7 +15,7 @@ interface INotifyArgs {
 
 export const notifySaga: (
   dispatch: Dispatch<AnyAction>
-) => (args: INotifyArgs) => Promise<void> = createSaga<INotifyArgs, void>(
+) => (args: INotifyArgs) => void = createSaga<INotifyArgs, void>(
   async (dispatch, { closable = true, msg, timeout }) => {
     const notification = NotificationFromMessage(msg, closable);
     dispatch(createAddNotificationAction(notification));

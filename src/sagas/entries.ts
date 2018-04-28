@@ -2,12 +2,12 @@ import { AnyAction, Dispatch } from "redux";
 import { entries } from "../api";
 import { IEntry } from "../model";
 import { createEntriesAddAction } from "../redux/entries";
-import { createSaga } from "../utils/reduxSagaCreator";
+import { createChainableSaga } from "../utils/reduxSagaCreator";
 import { notifySaga } from "./notifications";
 
 export const addEntrySaga: (
   dispatch: Dispatch<AnyAction>
-) => (args: string) => Promise<IEntry> = createSaga<string, IEntry>(
+) => (args: string) => Promise<IEntry> = createChainableSaga<string, IEntry>(
   async (dispatch, entryName) => {
     const entry = await entries.add(entryName);
     dispatch(createEntriesAddAction(entry));
